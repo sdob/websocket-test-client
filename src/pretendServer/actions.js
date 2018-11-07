@@ -21,7 +21,7 @@ export function updateQuality({ characterId, qualityId, qualityValue }) {
     axios.post(URL, {
       characterId,
       message: {
-        type: 'actions/MYSELF_CHANGED',
+        type: 'myself/MYSELF_CHANGED',
         payload: { qualityId, qualityValue },
       },
     })

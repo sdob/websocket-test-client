@@ -17,7 +17,26 @@ export default function reducer(state = INITIAL_STATE, { type, payload }) {
         ...state,
         qualities: payload,
       };
+    case 'myself/MYSELF_CHANGED':
+      return myselfChanged(state, payload);
     default:
       return state;
+  }
+}
+
+function myselfChanged(state, payload) {
+  const { qualityId, qualityValue } = payload;
+  const newQualities = [...state.qualities];
+  const idx = newQualities.findIndex(q => q.id === qualityId);
+  if (idx < 0) {
+    return state;
+  }
+  return {
+    ...state,
+    qualities: [
+      ...newQualities.slice(0, idx),
+      { ...newQualities[idx], level: qualityValue },
+      ...newQualities.slice(idx + 1),
+    ],
   }
 }

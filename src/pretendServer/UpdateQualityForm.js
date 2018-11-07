@@ -19,7 +19,11 @@ export class UpdateQualityForm extends Component {
     const { updateQuality } = this.props;
     const { characterId, qualityId, qualityValue } = this.state;
     e.preventDefault();
-    updateQuality({ characterId, qualityId, qualityValue });
+    updateQuality({
+      characterId: Number(characterId),
+      qualityId: Number(qualityId),
+      qualityValue: Number(qualityValue),
+    });
   }
 
   render = () => {
