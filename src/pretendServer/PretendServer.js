@@ -1,17 +1,22 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
+import RefreshActionsForm from './RefreshActionsForm';
+
 export class PretendServer extends Component {
   state = {
 
   }
 
   handleSendMessage = () => {
-    // const { characterId, messageText } = this.state;
+    const { characterId, messageText } = this.state;
   }
 
   render = () => {
     const { characterId: myCharacterId } = this.props;
+
+    console.info(process.env);
+
     return (
       <Fragment>
         <div>
@@ -22,6 +27,7 @@ export class PretendServer extends Component {
         <form onSubmit={this.handleSendMessage}>
 
         </form>
+        <RefreshActionsForm />
       </Fragment>
     );
   }
