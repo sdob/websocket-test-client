@@ -1,0 +1,19 @@
+.Login {
+  align-items: center;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  width: 15rem;
+}
+
+.Login__input {
+  font-size: 16px;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.Login__submit {
+  align-self: flex-end;
+  margin-top: 1rem;
+}
