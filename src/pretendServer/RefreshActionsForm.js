@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import { refreshActions } from './actions';
+import './RefreshActionsForm.css';
 
 export class RefreshActionsForm extends Component {
   state = {
-    actions: '',
+    actions: 0,
   }
-  
+
   handleChange = (e) => {
     this.setState({ actions: e.currentTarget.value });
   }
@@ -23,16 +24,25 @@ export class RefreshActionsForm extends Component {
   render = () => {
     const { actions } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>Refresh actions</label>
-        <input
-          name="actions"
-          value={actions}
-          onChange={this.handleChange}
-          type="number"
-        />
-        <button type="submit">Refresh</button>
-      </form>
+      <Fragment>
+        <h2>
+          Send yourself an action refresh!
+        </h2>
+        <form
+          className="RefreshActionsForm"
+          onSubmit={this.handleSubmit}
+        >
+          <label>Actions</label>
+          <input
+            name="actions"
+            value={actions}
+            onChange={this.handleChange}
+            type="number"
+            className="RefreshActionsForm__input"
+          />
+          <button type="submit">Refresh</button>
+        </form>
+      </Fragment>
     );
   }
 }
