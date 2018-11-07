@@ -18,3 +18,7 @@
 .Section__title {
   text-align: center;
 }
+
+.Section__title--smaller {
+  font-size: 1.5em;
+}
