@@ -66,7 +66,7 @@ class App extends Component {
           {loggedIn ? <LoggedIn onLogout={this.handleLogout} /> : <Login onSubmit={this.handleLogin} />}
         </div>
         <div className="Section">
-          <h1 className="Section__title">
+          <h1 className="Section__title Section__title--smaller">
             Pretend to be the FL app server
           </h1>
           <PretendServer />

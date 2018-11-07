@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { updateQuality } from './actions';
 
 import './UpdateQualityForm.css';
 
@@ -11,14 +12,14 @@ export class UpdateQualityForm extends Component {
   }
 
   handleChange = (e, key) => {
-    console.info(e);
     this.setState({ [key]: e.target.value });
   }
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
     const { updateQuality } = this.props;
     const { characterId, qualityId, qualityValue } = this.state;
-    updateQuality(characterId, qualityId, qualityValue);
+    e.preventDefault();
+    updateQuality({ characterId, qualityId, qualityValue });
   }
 
   render = () => {
@@ -61,4 +62,4 @@ export class UpdateQualityForm extends Component {
   }
 }
 
-export default connect()(UpdateQualityForm);
+export default connect(null, { updateQuality })(UpdateQualityForm);
