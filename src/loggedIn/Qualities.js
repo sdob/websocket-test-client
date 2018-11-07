@@ -27,7 +27,9 @@ export class Qualities extends Component {
             <li key={name} className="Category">
               <h3>{name}</h3>
               <ul className="Category__qualities">
-                {qualities.map(({ id, name, level }) => (
+                {qualities
+                  .filter(q => q.effectiveLevel + q.level > 0)
+                  .map(({ id, name, level }) => (
                   <li key={id}>{`${id} ${name}: ${level}`}</li>
                 ))}
               </ul>
