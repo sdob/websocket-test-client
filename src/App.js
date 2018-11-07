@@ -20,6 +20,7 @@ class App extends Component {
   
   state = {
     loggedIn: false,
+    showNotifications: true,
   }
 
   componentDidMount = () => {
@@ -33,7 +34,9 @@ class App extends Component {
 
   createWebsocketConnection = () => {
     const { dispatch } = this.props;
+    const { showNotifications } = this.state;
     const { access_token } = window.localStorage;
+
     this.socket = io.connect(WEBSOCKET_URL);
     this.socket.on('connect', () => {
       this.socket.emit('authentication', { token: access_token });
@@ -42,6 +45,13 @@ class App extends Component {
     this.socket.on('message', (data) => {
       const { message } = data;
       dispatch(message);
+      if (showNotifications) {
+        if (message.type === 'actions/REFRESH_ACTIONS') {
+          return new Notification('Your actions have been refreshed!');
+        }
+        console.info('new notification!');
+        return new Notification(`Your quality #${message.payload.qualityId} has changed to ${message.payload.qualityValue}!`);
+      }
     });
   }
 
