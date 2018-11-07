@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import { login } from './login/actions';
 
 import Login from './login/Login';
 import LoggedIn from './loggedIn/LoggedIn';
+
+import { fetchUser } from './user/actions';
 
 import PretendServer from './pretendServer/PretendServer';
 
 import './App.css';
 
 class App extends Component {
+  componentDidMount = () => {
+    const { fetchUser } = this.props;
+    if (window.localStorage.access_token) {
+      fetchUser();
+    }
+  }
+
   handleLogin = async (username, password) => {
     console.info(`logging in with ${username} / ${password}`);
     const { jwt } = await login(username, password);
@@ -37,4 +48,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, { fetchUser })(App);
