@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 
-export default class LoggedIn extends Component {
+export class LoggedIn extends Component {
   handleLogout = () => {
 
   }
 
   render = () => {
-    const { onLogout } = this.props;
+    const { actions, onLogout } = this.props;
     return (
       <Fragment>
         <h1 className="Section__title">
@@ -15,7 +16,16 @@ export default class LoggedIn extends Component {
         <div>
           <button onClick={onLogout}>Log out</button>
         </div>
+        <div>
+          Actions:
+          {' '}
+          {actions}
+        </div>
       </Fragment>
     );
   }
 }
+
+const mapStateToProps = ({ actions: { actions } }) => ({ actions });
+
+export default connect(mapStateToProps)(LoggedIn);

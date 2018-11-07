@@ -23,15 +23,16 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    const { fetchUser } = this.props;
+    const { dispatch } = this.props;
     if (window.localStorage.access_token) {
-      fetchUser();
+      dispatch(fetchUser());
       this.createWebsocketConnection();
       this.setState({ loggedIn: true });
     }
   }
 
   createWebsocketConnection = () => {
+    const { dispatch } = this.props;
     const { access_token } = window.localStorage;
     this.socket = io.connect(WEBSOCKET_URL);
     this.socket.on('connect', () => {
@@ -39,8 +40,8 @@ class App extends Component {
     });
 
     this.socket.on('message', (data) => {
-      console.info('data!');
-      console.info(data);
+      const { message } = data;
+      dispatch(message);
     });
   }
 
@@ -75,4 +76,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, { fetchUser })(App);
+export default connect()(App);
