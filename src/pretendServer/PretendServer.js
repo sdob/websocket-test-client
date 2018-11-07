@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import RefreshActionsForm from './RefreshActionsForm';
+import UpdateQualityForm from './UpdateQualityForm';
 
 export class PretendServer extends Component {
   state = {
@@ -27,6 +28,7 @@ export class PretendServer extends Component {
         <form onSubmit={this.handleSendMessage}>
 
         </form>
+        <UpdateQualityForm />
         <RefreshActionsForm />
       </Fragment>
     );

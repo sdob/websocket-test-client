@@ -15,3 +15,15 @@ export function refreshActions(actions) {
     return data;
   }
 }
+
+export function updateQuality({ characterId, qualityId, qualityValue }) {
+  return () => {
+    axios.post(URL, {
+      characterId,
+      message: {
+        type: 'actions/MYSELF_CHANGED',
+        payload: { qualityId, qualityValue },
+      },
+    })
+  };
+}
