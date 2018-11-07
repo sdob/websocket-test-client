@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
+import Qualities from './Qualities';
+
 export class LoggedIn extends Component {
-  handleLogout = () => {
-
-  }
-
   render = () => {
     const { actions, characterName, onLogout } = this.props;
     return (
@@ -21,6 +19,7 @@ export class LoggedIn extends Component {
           </div>
           <button onClick={onLogout}>Log out</button>
         </div>
+        <Qualities />
       </Fragment>
     );
   }
