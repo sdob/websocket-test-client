@@ -7,6 +7,8 @@ import { login } from './login/actions';
 import Login from './login/Login';
 import LoggedIn from './loggedIn/LoggedIn';
 
+import showNotification from './notifications/showNotification';
+
 import { fetchUser } from './user/actions';
 
 import './App.css';
@@ -35,7 +37,6 @@ class App extends Component {
 
   createWebsocketConnection = () => {
     const { dispatch } = this.props;
-    const { showNotifications } = this.state;
     const { access_token } = window.localStorage;
 
     // Connect to the websocket server
@@ -51,12 +52,8 @@ class App extends Component {
       // The message should be a Redux action we can simply dispatch
       dispatch(message);
       // TODO: handle notifications --- this code works fine on desktops but throws an error on mobiles
-      if ('Notification' in window && showNotifications) {
-        if (message.type === 'actions/REFRESH_ACTIONS') {
-          return new Notification('Your actions have been refreshed!');
-        }
-        console.info('new notification!');
-        return new Notification(`Your quality #${message.payload.qualityId} has changed to ${message.payload.qualityValue}!`);
+      if ('Notification' in window && Notification.permission === 'granted') {
+        showNotification(message);
       }
     });
   }
