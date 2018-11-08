@@ -9,8 +9,6 @@ import LoggedIn from './loggedIn/LoggedIn';
 
 import { fetchUser } from './user/actions';
 
-import PretendServer from './pretendServer/PretendServer';
-
 import './App.css';
 
 const { REACT_APP_WEBSOCKET_SERVER_URL: WEBSOCKET_URL } = process.env;
@@ -74,12 +72,6 @@ class App extends Component {
       <div className="App">
         <div className="Section">
           {loggedIn ? <LoggedIn onLogout={this.handleLogout} /> : <Login onSubmit={this.handleLogin} />}
-        </div>
-        <div className="Section">
-          <h1 className="Section__title Section__title--smaller">
-            Pretend to be the FL app server
-          </h1>
-          <PretendServer />
         </div>
       </div>
     );
