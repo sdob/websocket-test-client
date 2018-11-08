@@ -5,12 +5,15 @@ import Qualities from './Qualities';
 
 export class LoggedIn extends Component {
   render = () => {
-    const { actions, characterName, onLogout } = this.props;
+    const { actions, characterId, characterName, onLogout } = this.props;
     return (
       <Fragment>
         <h1 className="Section__title Section__title--smaller">
           {characterName ? `It's ${characterName}! Welcome to the Internet, delicious friend!` : ' '}
         </h1>
+        <div>
+          {`Your character ID is ${characterId}`}
+        </div>
         <div style={{ display: 'flex', justifyContent: 'space-between'}}>
           <div>
             Actions:
@@ -27,7 +30,7 @@ export class LoggedIn extends Component {
 
 const mapStateToProps = ({
   actions: { actions },
-  user: { characterName },
-}) => ({ actions, characterName });
+  user: { characterId, characterName },
+}) => ({ actions, characterId, characterName });
 
 export default connect(mapStateToProps)(LoggedIn);
