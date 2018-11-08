@@ -18,14 +18,17 @@ class App extends Component {
   
   state = {
     loggedIn: false,
-    showNotifications: true,
+    showNotifications: false,
   }
 
   componentDidMount = () => {
     const { dispatch } = this.props;
+    // If we have an access token, then get the user object
     if (window.localStorage.access_token) {
       dispatch(fetchUser());
+      // Connect to the websocket server immediately
       this.createWebsocketConnection();
+      // We're logged in
       this.setState({ loggedIn: true });
     }
   }
@@ -35,15 +38,20 @@ class App extends Component {
     const { showNotifications } = this.state;
     const { access_token } = window.localStorage;
 
+    // Connect to the websocket server
     this.socket = io.connect(WEBSOCKET_URL);
+    // When we've connected, send the access token to the websocket server
     this.socket.on('connect', () => {
       this.socket.emit('authentication', { token: access_token });
     });
 
-    this.socket.on('message', (data) => {
-      const { message } = data;
+    // Set us up to handle messages
+    this.socket.on('message', (message) => {
+      console.info(`message received: ${JSON.stringify(message, null, 2)}`);
+      // The message should be a Redux action we can simply dispatch
       dispatch(message);
-      if (showNotifications) {
+      // TODO: handle notifications --- this code works fine on desktops but throws an error on mobiles
+      if ('Notification' in window && showNotifications) {
         if (message.type === 'actions/REFRESH_ACTIONS') {
           return new Notification('Your actions have been refreshed!');
         }
@@ -54,20 +62,28 @@ class App extends Component {
   }
 
   handleLogin = async (username, password) => {
-    console.info(`logging in with ${username} / ${password}`);
+    const { dispatch } = this.props;
+    // Log in to FL
     const { jwt } = await login(username, password);
+    // Set the access token
     window.localStorage.setItem('access_token', jwt);
+    // Connect to the websocket server
     this.createWebsocketConnection();
+    // Fetch the user data from the FL API
+    dispatch(fetchUser());
+    // OK, we're logged in
     this.setState({ loggedIn: true });
   }
 
   handleLogout = () => {
+    // Remove the access token
     window.localStorage.removeItem('access_token');
+    // We're logged out
     this.setState({ loggedIn: false });
   }
 
   render() {
-    const loggedIn = !!window.localStorage.access_token;
+    const { loggedIn } = this.state;
     return (
       <div className="App">
         <div className="Section">

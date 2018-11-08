@@ -25,18 +25,18 @@ export default function reducer(state = INITIAL_STATE, { type, payload }) {
 }
 
 function myselfChanged(state, payload) {
-  const { qualityId, qualityValue } = payload;
-  const newQualities = [...state.qualities];
-  const idx = newQualities.findIndex(q => q.id === qualityId);
-  if (idx < 0) {
-    return state;
-  }
-  return {
-    ...state,
-    qualities: [
+  // const { qualityId, qualityValue } = payload;
+  let newQualities = [...state.qualities];
+  payload.forEach(({ id, level }) => {
+    const idx = newQualities.findIndex(q => q.id === id);
+    if (idx < 0) {
+      return;
+    }
+    newQualities = [
       ...newQualities.slice(0, idx),
-      { ...newQualities[idx], level: qualityValue },
+      { ...newQualities[idx], level },
       ...newQualities.slice(idx + 1),
-    ],
-  }
+    ];
+  });
+  return { ...state, qualities: newQualities };
 }
