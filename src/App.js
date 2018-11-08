@@ -73,6 +73,7 @@ class App extends Component {
   }
 
   handleLogout = () => {
+    this.socket.disconnect();
     // Remove the access token
     window.localStorage.removeItem('access_token');
     // We're logged out
